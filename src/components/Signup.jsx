@@ -14,6 +14,11 @@ export default function Signup() {
     event.preventDefault();
     setError("");
 
+    if (!(email.endsWith("moh.ps") || email.endsWith("student.aaup.edu"))) {
+      setError("This email is not allowed.");
+      return;
+    }
+
     if (password !== confirmPassword) {
       setError("Passwords do not match. Please try again.");
       return;
@@ -28,7 +33,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-blue-900">
       <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-6">
         <h1 className="text-2xl font-bold text-center mb-6">Sign Up</h1>
         {error && <p className="text-red-500 text-center mb-4">{error}</p>}

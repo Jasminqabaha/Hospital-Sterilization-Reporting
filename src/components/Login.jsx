@@ -24,6 +24,10 @@ export default function Login() {
     navigate("/forgot-password");
   };
 
+  const handleSignUp = () => {
+    navigate("/signup");  // Navigate to the sign-up page
+  };
+
   return (
     <div className="flex items-center justify-center h-screen bg-gradient-to-r from-blue-500 to-blue-900">
       <div className="flex w-3/4 bg-white rounded-lg shadow-lg overflow-hidden">
@@ -72,6 +76,15 @@ export default function Login() {
                 className="text-blue-500 hover:underline"
               >
                 Forgot Password?
+              </button>
+            </div>
+            {/* Sign-up Button */}
+            <div className="mt-4 text-center">
+              <button
+                onClick={handleSignUp}
+                className="text-blue-500 hover:underline"
+              >
+                Don't have an account? Sign Up
               </button>
             </div>
           </div>
