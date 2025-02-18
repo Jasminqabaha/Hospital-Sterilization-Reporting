@@ -14,10 +14,10 @@ export default function Signup() {
     event.preventDefault();
     setError("");
 
-    // if (!(email.endsWith("moh.ps") || email.endsWith("student.aaup.edu"))) {
-    //   setError("This email is not allowed.");
-    //   return;
-    // }
+    if (!(email.endsWith("moh.ps") || email.endsWith("student.aaup.edu"))) {
+      setError("This email is not allowed.");
+      return;
+    }
 
     if (password !== confirmPassword) {
       setError("Passwords do not match. Please try again.");
