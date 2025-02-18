@@ -13,7 +13,15 @@ export default function Login() {
     event.preventDefault();
     setError("");
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Check if the user's email is verified
+      if (!user.emailVerified) {
+        setError("Please verify your email before logging in.");
+        return;
+      }
+
       navigate("/dashboard");
     } catch (err) {
       setError("Invalid email or password. Please try again.");

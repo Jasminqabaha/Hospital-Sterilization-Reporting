@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { auth } from "../firebase";
 
 export default function Signup() {
@@ -14,10 +14,10 @@ export default function Signup() {
     event.preventDefault();
     setError("");
 
-    if (!(email.endsWith("moh.ps") || email.endsWith("student.aaup.edu"))) {
-      setError("This email is not allowed.");
-      return;
-    }
+    // if (!(email.endsWith("moh.ps") || email.endsWith("student.aaup.edu"))) {
+    //   setError("This email is not allowed.");
+    //   return;
+    // }
 
     if (password !== confirmPassword) {
       setError("Passwords do not match. Please try again.");
@@ -25,8 +25,15 @@ export default function Signup() {
     }
 
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      navigate("/dashboard"); 
+      // Create user
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Send email verification
+      await sendEmailVerification(user);
+      
+      setError("Please verify your email before logging in.");
+      navigate("/"); // Redirect to login page after signing up
     } catch (err) {
       setError("Failed to create account. Please try again.");
     }
@@ -65,10 +72,7 @@ export default function Signup() {
             />
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="confirmPassword"
-              className="block text-sm font-medium mb-2"
-            >
+            <label htmlFor="confirmPassword" className="block text-sm font-medium mb-2">
               Confirm Password
             </label>
             <input
